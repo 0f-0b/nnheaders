@@ -1,52 +1,78 @@
 #pragma once
 
-#include <nn/types.h>
+#include "nn/types.h"
 
 namespace nn::util {
+namespace neon {
+using f32x4 = __attribute__((neon_vector_type(4))) f32;
 
-typedef uint32_t AngleIndex;
+struct Vector3fType {
+    f32x4 v;
+};
+
+struct Vector4fType {
+    f32x4 v;
+};
+
+struct MatrixColumnMajor4x3fType {
+    f32x4 m[3];
+};
+
+struct MatrixColumnMajor4x4fType {
+    f32x4 m[4];
+};
+
+struct MatrixRowMajor4x3fType {
+    f32x4 m[4];
+};
+
+struct MatrixRowMajor4x4fType {
+    f32x4 m[4];
+};
+
+}  // namespace neon
+
+using AngleIndex = u32;
 
 struct Float2 {
     union {
-        float v[2];
+        f32 v[2];
         struct {
-            float x;
-            float y;
+            f32 x;
+            f32 y;
         };
     };
 };
 
 struct Float3 {
     union {
-        float v[3];
+        f32 v[3];
         struct {
-            float x;
-            float y;
-            float z;
+            f32 x;
+            f32 y;
+            f32 z;
         };
     };
 };
 
 struct Float4 {
     union {
-        float v[4];
+        f32 v[4];
         struct {
-            float x;
-            float y;
-            float z;
-            float w;
+            f32 x;
+            f32 y;
+            f32 z;
+            f32 w;
         };
     };
 };
 
 struct FloatColumnMajor4x3 {
-    float m[3][4];
+    f32 m[3][4];
 };
 
 struct Unorm8x4 {
-    union {
-        uint8_t v[4];
-    };
+    u8 v[4];
 };
 
 typedef Unorm8x4 Color4u8Type;
