@@ -330,7 +330,7 @@ private:
     detail::IntrusiveListImplementation m_Implementation;
 };
 
-template <class HolderT, IntrusiveListNode HolderT::*Member, class T = HolderT>
+template <class HolderT, IntrusiveListNode HolderT::* Member, class T = HolderT>
 class IntrusiveListMemberNodeTraits {
     friend class IntrusiveList<T, IntrusiveListMemberNodeTraits>;
 
@@ -349,6 +349,21 @@ class IntrusiveListMemberNodeTraits {
     static uintptr_t GetOffset() {
         return reinterpret_cast<uintptr_t>(&(reinterpret_cast<T*>(0)->*Member));
     }
+};
+
+template <typename T, typename>
+class IntrusiveListBaseNodeTraits {
+    friend class IntrusiveList<T, IntrusiveListBaseNodeTraits>;
+
+    static IntrusiveListNode& GetNode(T& ref) { return dynamic_cast<IntrusiveListNode&>(ref); }
+
+    static const IntrusiveListNode& GetNode(const T& ref) {
+        return dynamic_cast<const IntrusiveListNode&>(ref);
+    }
+
+    static T& GetItem(IntrusiveListNode& node) { return dynamic_cast<T&>(node); }
+
+    static const T& GetItem(const IntrusiveListNode& node) { return dynamic_cast<T&>(node); }
 };
 
 }  // namespace nn::util
