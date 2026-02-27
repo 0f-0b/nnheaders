@@ -163,6 +163,7 @@ add_library(NintendoSDK OBJECT
   include/nn/nifm.h
   include/nn/prepo.h
   include/nn/vfx/Config.h
+  include/nn/vfx/Emitter.h
   include/nn/vfx/System.h
   include/nn/vfx/Heap.h
   include/nn/socket.h
@@ -179,9 +180,11 @@ add_library(NintendoSDK OBJECT
   include/nn/util/util_BytePtr.h
   include/nn/util/util_IntrusiveList.h
   include/nn/util/util_BitUtil.h
+  include/nn/util/util_IntrusiveList.h
   include/nn/util/util_ResDic.h
   include/nn/util/util_StringView.h
   include/nn/ui2d/detail/TexCoordArray.h
+  include/nn/ui2d/Group.h
   include/nn/ui2d/Layout.h
   include/nn/ui2d/Material.h
   include/nn/ui2d/Pane.h
@@ -282,6 +285,11 @@ add_library(NintendoSDK OBJECT
   src/NintendoSDK/nvn/nvn_CppFuncPtrImpl.h
   src/NintendoSDK/nvn/nvn_FuncPtrImpl.h
   src/NintendoSDK/nvn/nvn_Impl.cpp
+
+  src/NintendoWare/ui2d/Group.cpp
+  src/NintendoWare/ui2d/Layout.cpp
+  src/NintendoWare/ui2d/Pane.cpp
+  src/NintendoWare/vfx/Emitter.cpp
 )
 
 target_include_directories(NintendoSDK PUBLIC include/)
