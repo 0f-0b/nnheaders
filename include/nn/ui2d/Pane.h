@@ -42,9 +42,12 @@ struct ResExtUserDataList;
 
 class Pane : public detail::PaneBase {
 public:
-    NN_RUNTIME_TYPEINFO_BASE();
+    NN_RUNTIME_TYPEINFO_BASE()
 
-    struct CalculateContext;
+    struct CalculateContext {
+        void SetDefault();
+        void Set(const DrawInfo&, const Layout*);
+    };
 
     typedef util::IntrusiveList<Pane, util::IntrusiveListMemberNodeTraits<
                                           detail::PaneBase, &detail::PaneBase::m_Link, Pane>>
@@ -57,17 +60,17 @@ public:
     ~Pane() override;
     virtual void Finalize(gfx::Device*);
     virtual s32 GetVertexColor(s32);
-    virtual void SetVertexColor(s32, util::Unorm8x4 const&);
+    virtual void SetVertexColor(s32, const util::Unorm8x4&);
     virtual u8 GetColorElement(s32);
     virtual void SetColorElement(u32, u8);
     virtual u8 GetVertexColorElement(s32);
     virtual void SetVertexColorElement(u32, u8);
     virtual u32 GetMaterialCount() const;
     virtual Material* GetMaterial(s32) const;
-    virtual Pane* FindPaneByName(char const*, bool);
-    virtual const Pane* FindPaneByName(char const*, bool) const;
-    virtual Material* FindMaterialByName(char const*, bool);
-    virtual const Material* FindMaterialByName(char const*, bool) const;
+    virtual Pane* FindPaneByName(const char*, bool);
+    virtual const Pane* FindPaneByName(const char*, bool) const;
+    virtual Material* FindMaterialByName(const char*, bool);
+    virtual const Material* FindMaterialByName(const char*, bool) const;
     virtual void BindAnimation(AnimTransform*, bool, bool);
     virtual void UnbindAnimation(AnimTransform*, bool);
     virtual void UnbindAnimationSelf(AnimTransform*);
@@ -81,6 +84,7 @@ public:
     void AppendChild(Pane*);
     void PrependChild(Pane*);
     void InsertChild(Pane*, Pane*);
+    void InsertChild(PaneList::iterator, Pane*);
     void RemoveChild(Pane*);
 
     void Show() { SetVisible(true); }
@@ -164,26 +168,28 @@ private:
     void AllocateAndCopyAnimatedExtUserData(const ResExtUserDataList*);
     void CalculateGlobalMatrixSelf(CalculateContext&);
 
-    Pane* mParent;
+    Pane* mParent = nullptr;
     PaneList mChildList;
-    util::Float3 mPosition;
-    util::Float3 mRotation;
-    util::Float2 mScale;
-    Size mSize;
-    u8 mFlags;
-    u8 mAlpha;
-    u8 mGlobalAlpha;
-    u8 mBasePosition;
-    u8 mFlagEx;
+    util::Float3 mPosition = {{{0, 0, 0}}};
+    util::Float3 mRotation = {{{0, 0, 0}}};
+    util::Float2 mScale = {{{1, 1}}};
+    Size mSize = {0, 0};
+    u8 mFlags = 0x11;
+    u8 mAlpha = 0xff;
+    u8 mGlobalAlpha = 0xff;
+    u8 mBasePosition = 0;
+    u8 mFlagEx = 0;
     u32 mSystemDataFlags;
     Layout* mLayout;
-    util::MatrixT4x3fType mMtx;
-    const util::MatrixT4x3fType* mUserMtx;
-    const ResExtUserDataList* mExtUserDataList;
-    void* mAnimExtUserData;
-    char mPanelName[25];
-    char mUserData[9];
-    u16 _DA;
-    u32 _DC;
+    util::MatrixT4x3fType mMtx = {{
+        {1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0},
+    }};
+    const util::MatrixT4x3fType* mUserMtx = nullptr;
+    const ResExtUserDataList* mExtUserDataList = nullptr;
+    void* mAnimExtUserData = nullptr;
+    char mPanelName[25] = {};
+    char mUserData[9] = {};
 };
 }  // namespace nn::ui2d
