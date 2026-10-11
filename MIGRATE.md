@@ -11,10 +11,10 @@ for each phase.
 | Phase 1: Port current `nnsdk` files | ✅ Done |
 | Phase 1: Port current `nnware` files | ✅ Done |
 | Phase 1.5 Port `nnheaders` PRs | 2026-10 |
-| Phase 2: `sead` compatibility gate (default on) | 2026-11 |
+| Phase 2: `sead` compatibility gate (default on) |✅ Done |
 | Phase 2: `NintendoSDK-NEX` compatibility gate (default on) | 2026-11 |
 | Phase 2: `eui` compatibility gate (default on) | 2026-11 |
-| Phase 3: BOTW update | Before 2027 |
+| Phase 3: BOTW update | ✅ Done |
 | Phase 3: SMO update | Before 2027 |
 | Phase 3: `sead` gate default off | Before 2027 |
 | Phase 3: `NintendoSDK-NEX` gate default off | Before 2027 |
